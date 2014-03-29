@@ -69,7 +69,9 @@
    */
   SU.mergesort = function (collection, compare) {
     var compare = compare || _defaultCompare;
+
     SU._mergesort(collection, 0, collection.length - 1, compare);
+
     return collection;
   }
 
@@ -88,8 +90,8 @@
       // Length of 1 is sorted, done
       if (Math.floor(right - left) <= 0) { return; }
 
+      // calculate midpoint of section
       mid = Math.floor((left + right) / 2);
-
       // mergesort left half
       SU._mergesort(collection, left, mid, compare);
       // mergesort right half
@@ -101,6 +103,12 @@
   /**
    * private helper function to merge
    * for merge sort algorithm.
+   *
+   * @param {Array}    collection The array contained segments to be merged
+   * @param {Number}   left       The start index of left segment
+   * @param {Number}   mid        The end index of left segment
+   * @param {Number}   right      The end index of the right segment
+   * @param {Function} [compare]  The compare function to determine order
    */
   SU._merge = function(collection, left, mid, right, compare) {
     var compare      = compare || _defaultCompare,
@@ -112,13 +120,13 @@
         i            = 0;
 
     while (leftPointer <= leftStop || rightPointer <= right) {
-      if (leftPointer > leftStop) {
+      if (leftPointer > leftStop) {        // left segment finished
         sorted.push(collection[rightPointer]);
         rightPointer++;
-      } else if (rightPointer > right) {
+      } else if (rightPointer > right) {  // right segment finished
         sorted.push(collection[leftPointer]);
         leftPointer++;
-      } else {
+      } else {                        // neither segment exhausted, must compare
         if (compare(collection[leftPointer], collection[rightPointer]) > 0) {
           sorted.push(collection[rightPointer]);
           rightPointer++;
