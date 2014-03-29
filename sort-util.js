@@ -68,8 +68,35 @@
    * @return {Array}               The sorted array
    */
   SU.mergesort = function (collection, compare) {
-      return collection;
+    var compare = compare || _defaultCompare;
+    SU._mergesort(collection, 0, collection.length - 1, compare);
+    return collection;
   }
+
+  /**
+   * Private recursive helper function for mergesort.
+   *
+   * @param {Array}    collection The array to be sorted
+   * @param {Number}   left       The start index of the segment being sorted
+   * @param {Number}   right      The end index of the segment being sorted
+   * @param {Function} [compare]  The compare function to determine order
+   */
+  SU._mergesort = function(collection, left, right, compare) {
+      var compare = compare || _defaultCompare,
+          mid = null;
+
+      // Length of 1 is sorted, done
+      if (Math.floor(right - left) <= 0) { return; }
+
+      mid = Math.floor((left + right) / 2);
+
+      // mergesort left half
+      SU._mergesort(collection, left, mid, compare);
+      // mergesort right half
+      SU._mergesort(collection, mid + 1, right, compare);
+      // merge two sorted halves
+      SU._merge(collection, left, mid, right, compare);
+  };
 
   /**
    * private helper function to merge
