@@ -146,8 +146,69 @@
    * @return {Array}               The sorted array
    */
   SU.quicksort = function (collection, compare) {
-      return collection;
+    var compare = compare || _defaultCompare;
+
+    SU._quicksort(collection, 0, collection.length - 1, compare);
+
+    return collection;
   }
+
+  /**
+   * Private recursive helper function for quicksort.
+   *
+   * @param {Array}    collection The collection to be sorted
+   * @param {Number}   left       Start index of segment
+   * @param {Number}   right      End index of segment
+   * @param {Function} [compare]  The compare function to use
+   */
+  SU._quicksort = function(collection, left, right, compare) {
+    var compare = compare || _defaultCompare,
+        pivot   = null;
+
+    if (left < right) {
+      // Find new pivot and partition
+      pivot = SU._partition(collection, left, right, compare);
+      // Recursively quicksort left segment
+      SU._quicksort(collection, left, pivot - 1, compare);
+      // Recursively quicksort right setgment
+      SU._quicksort(collection, pivot + 1, right, compare);
+    }
+  }
+
+  /**
+   * Private helper function for quicksort algorithm. On a
+   * specified range, it creates a pivot and ensures that all
+   * values NOT greater than the pivot occur on the left side
+   * of the pivot element, and all values NOT less than the pivot
+   * occur on the right side of the pivot element.
+   *
+   * @param  {Array}  collection The collection to be partitioned
+   * @param  {Number} left       The start of the range to be partitioned
+   * @param  {Number} right      The end of the range to be partitioned
+   * @param  {Number} compare    The compare function to use
+   * @return {Number}            The index of the pivot
+   */
+  SU._partition = function(collection, left, right, compare) {
+    var compare = compare || _defaultCompare,
+        pivot   = collection[right],
+        pIndex  = left,
+        tmp     = null,
+        i       = 0;
+
+    for (i = left; i < right; i++) {
+      if (compare(collection[i], pivot) <= 0) {
+        tmp = collection[i];
+        collection[i] = collection[pIndex];
+        collection[pIndex] = tmp;
+        pIndex++;
+      }
+    }
+
+    collection[right] = collection[pIndex];
+    collection[pIndex] = pivot;
+
+    return pIndex;
+  };
 
   /* Heapsort
   ----------------------------------------------------------------------------*/
