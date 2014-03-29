@@ -230,7 +230,7 @@
    * @return {Array}               The sorted array
    */
   SU.heapsort = function (collection, compare) {
-      return collection;
+    return collection;
   }
 
   /**
@@ -242,6 +242,6 @@
    * @return {Number}   Returns < 0 if a < b, 0 if a == b and > 0 if a > b
    */
   function _defaultCompare(a, b) {
-      return a - b;
+    return a - b;
   }
 }(window.SortUtil = window.SortUtil || {})
