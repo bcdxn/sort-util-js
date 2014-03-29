@@ -92,6 +92,42 @@
 
     /* heapsort
     -----------------------------------------------------*/
+    test("_parent", function () {
+      var i0 = 1,
+          i1 = 2,
+          i2 = 3,
+          i3 = 4,
+          i4 = 10;
+
+      ok(SU._parent(i0) == 0 && SU._parent(i1) == 0 &&
+        SU._parent(i2) == 1 && SU._parent(i3) == 1 &&
+        SU._parent(i4) == 4, "Passed!");
+    });
+
+    test("_left", function () {
+      var i0 = 0,
+          i1 = 1,
+          i2 = 2,
+          i3 = 3,
+          i4 = 10;
+
+      ok(SU._left(i0) == 1 && SU._left(i1) == 3 &&
+        SU._left(i2) == 5 && SU._left(i3) == 7 &&
+        SU._left(i4) == 21, "Passed!");
+    });
+
+    test("_right", function () {
+      var i0 = 0,
+          i1 = 1,
+          i2 = 2,
+          i3 = 3,
+          i4 = 10;
+
+      ok(SU._right(i0) == 2 && SU._right(i1) == 4 &&
+        SU._right(i2) == 6 && SU._right(i3) == 8 &&
+        SU._right(i4) == 22, "Passed!");
+    });
+
     test("heapsort", function () {
       var ary = [0,1,2,3,4,5,6],
           inOrder = ary.slice(0);

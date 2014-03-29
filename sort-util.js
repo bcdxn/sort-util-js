@@ -234,6 +234,30 @@
   }
 
   /**
+   * Get the index of the parent of the given index.
+   *
+   * @param  {Number} i The index to get the parent of
+   * @return {Number}   The idnex of parent of the given index
+   */
+  SU._parent = function (i) { return Math.floor((i - 1)/ 2); }
+
+   /**
+   * Get the index of the left child of the given index.
+   *
+   * @param  {Number} i The index to get the left child of
+   * @return {Number}   The index of the left child of the given index
+   */
+  SU._left   = function (i) { return Math.floor((2 * i) + 1); }
+  
+  /**
+   * Get the index of the right child of the given index.
+   *
+   * @param  {Number} i The index to get the right child of
+   * @return {Number}   The index of the right child of the given index
+   */
+  SU._right  = function (i) { return Math.floor((2 * i ) + 2); }
+
+  /**
    * Private default compare function. Works only
    * with numbers.
    *
