@@ -23,6 +23,7 @@
 
       _performOnAllPermutations(ary, function (ary) {
         var sorted = ary.slice(0);
+
         SU.insertionSort(sorted);
         ok(sorted.equals(inOrder), ary.join(',') + ' -- ' + inOrder.join(','));
       }, 0);
@@ -43,8 +44,10 @@
     test("mergesort", function () {
       var ary = [0,1,2,3,4,5,6],
           inOrder = ary.slice(0);
+
       _performOnAllPermutations(ary, function (ary) {
         var sorted = ary.slice(0);
+
         SU.mergesort(sorted);
         ok(sorted.equals(inOrder), ary.join(',') + ' -- ' + inOrder.join(','));
       }, 0);
@@ -52,11 +55,36 @@
 
     /* quicksort
     -----------------------------------------------------*/
+    test("_partition", function () {
+      var ary    = [2,6,0,3,1,5,4],
+          pIndex = SU._partition(ary),
+          pass   = true,
+          i;
+
+      for (i = 0; i < ary.length; i++) {
+        if (i < pIndex) {
+          if (ary[i] > ary[pIndex]) {
+            pass = false;
+            break;
+          }
+        } else if (i > pIndex){
+          if (ary[i] < ary[Index]) {
+            pass = false;
+            break;
+          }
+        }
+      }
+
+      ok(pass, "Passed!");
+    });
+
     test("quicksort", function () {
       var ary = [0,1,2,3,4,5,6],
           inOrder = ary.slice(0);
+
       _performOnAllPermutations(ary, function (ary) {
         var sorted = ary.slice(0);
+
         SU.quicksort(sorted);
           ok(sorted.equals(inOrder), ary.join(',') + ' -- ' + inOrder.join(','));
       }, 0);
@@ -67,8 +95,10 @@
     test("heapsort", function () {
       var ary = [0,1,2,3,4,5,6],
           inOrder = ary.slice(0);
+
       _performOnAllPermutations(ary, function (ary) {
         var sorted = ary.slice(0);
+
         SU.heapsort(sorted);
         ok(sorted.equals(inOrder), ary.join(',') + ' -- ' + inOrder.join(','));
       }, 0);
