@@ -71,6 +71,42 @@
       return collection;
   }
 
+  /**
+   * private helper function to merge
+   * for merge sort algorithm.
+   */
+  SU._merge = function(collection, left, mid, right, compare) {
+    var compare      = compare || _defaultCompare,
+        sorted       = [],
+        leftPointer  = left,
+        leftStop     = mid,
+        rightPointer = mid + 1,
+        length       = right - left + 1,
+        i            = 0;
+
+    while (leftPointer <= leftStop || rightPointer <= right) {
+      if (leftPointer > leftStop) {
+        sorted.push(collection[rightPointer]);
+        rightPointer++;
+      } else if (rightPointer > right) {
+        sorted.push(collection[leftPointer]);
+        leftPointer++;
+      } else {
+        if (compare(collection[leftPointer], collection[rightPointer]) > 0) {
+          sorted.push(collection[rightPointer]);
+          rightPointer++;
+        } else {
+          sorted.push(collection[leftPointer]);
+          leftPointer++;
+        }
+      }
+    }
+
+    for (i = 0; i < length; i++) { collection[left + i] = sorted[i]; }
+
+    return collection;
+  };
+
   /* Quicksort
   ----------------------------------------------------------------------------*/
 
