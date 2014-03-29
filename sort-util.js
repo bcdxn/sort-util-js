@@ -35,6 +35,24 @@
    * @return {Array}               The sorted array
    */
   SU.insertionSort = function(collection, compare) {
+    var compare = compare || _defaultCompare,
+        length  = collection.length,
+        tmp     = null,
+        i       = 0,
+        j       = 0;
+
+    for (i = 1; i < length; i++) {
+      for (j = i; j > 0; j--) {
+        if (collection[j] < collection[j - 1]) {
+          tmp = collection[j];
+          collection[j] = collection[j - 1];
+          collection[j - 1] = tmp;
+        } else {
+          break;
+        }
+      }
+    }
+
     return collection;
   };
 
@@ -81,5 +99,17 @@
    */
   SU.heapsort = function (collection, compare) {
       return collection;
+  }
+
+  /**
+   * Private default compare function. Works only
+   * with numbers.
+   *
+   * @param  {Number} a The first element to compare
+   * @param  {Number} b The second element to compare
+   * @return {Number}   Returns < 0 if a < b, 0 if a == b and > 0 if a > b
+   */
+  function _defaultCompare(a, b) {
+      return a - b;
   }
 }(window.SortUtil = window.SortUtil || {})
