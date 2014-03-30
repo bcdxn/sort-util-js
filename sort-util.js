@@ -45,7 +45,7 @@
 
     for (i = 1; i < length; i++) {
       for (j = i; j > 0; j--) {
-        if (collection[j] < collection[j - 1]) {
+        if (compare(collection[j], collection[j - 1]) < 0) {
           tmp = collection[j];
           collection[j] = collection[j - 1];
           collection[j - 1] = tmp;
@@ -292,7 +292,7 @@
    * @param  {Number} i The index to get the parent of
    * @return {Number}   The idnex of parent of the given index
    */
-  SU._parent = function (i) { return Math.floor((i - 1)/ 2); }
+  SU._parent = function (i) { return Math.floor((i - 1) / 2); }
 
    /**
    * Get the index of the left child of the given index.
