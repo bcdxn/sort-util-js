@@ -128,6 +128,21 @@
         SU._right(i4) == 22, "Passed!");
     });
 
+    test("_heapify heap height == 1; no recursion", function () {
+      var heap = [5,25,13];
+
+      SU._heapify(heap, 0, heap.length);
+      ok(heap.equals([25,5,13]));
+    });
+
+    test("_heapify heap height == 2; recursion used", function () {
+      var heap = [5,25,13,10,14],
+          heapified = [25,14,13,10,5];
+
+      SU._heapify(heap, 0, heap.length);
+      ok(heap.equals(heapified), heap.join(',') + ' -- ' + heapified.join(','));
+    });
+
     test("heapsort", function () {
       var ary = [0,1,2,3,4,5,6],
           inOrder = ary.slice(0);
@@ -136,7 +151,7 @@
         var sorted = ary.slice(0);
 
         SU.heapsort(sorted);
-        ok(sorted.equals(inOrder), ary.join(',') + ' -- ' + inOrder.join(','));
+        ok(sorted.equals(inOrder), ary.join(',') + ' -- ' + sorted + ' -- ' + inOrder.join(','));
       }, 0);
     });
 
