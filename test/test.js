@@ -92,6 +92,57 @@
 
     /* heapsort
     -----------------------------------------------------*/
+    test("_parent", function () {
+      var i0 = 1,
+          i1 = 2,
+          i2 = 3,
+          i3 = 4,
+          i4 = 10;
+
+      ok(SU._parent(i0) == 0 && SU._parent(i1) == 0 &&
+        SU._parent(i2) == 1 && SU._parent(i3) == 1 &&
+        SU._parent(i4) == 4, "Passed!");
+    });
+
+    test("_left", function () {
+      var i0 = 0,
+          i1 = 1,
+          i2 = 2,
+          i3 = 3,
+          i4 = 10;
+
+      ok(SU._left(i0) == 1 && SU._left(i1) == 3 &&
+        SU._left(i2) == 5 && SU._left(i3) == 7 &&
+        SU._left(i4) == 21, "Passed!");
+    });
+
+    test("_right", function () {
+      var i0 = 0,
+          i1 = 1,
+          i2 = 2,
+          i3 = 3,
+          i4 = 10;
+
+      ok(SU._right(i0) == 2 && SU._right(i1) == 4 &&
+        SU._right(i2) == 6 && SU._right(i3) == 8 &&
+        SU._right(i4) == 22, "Passed!");
+    });
+
+    test("_heapify heap height == 1; no recursion", function () {
+      var heap = [5,25,13];
+
+      SU._heapify(heap, 0, heap.length);
+      ok(heap.equals([25,5,13]));
+    });
+
+    test("_heapify heap height == 2; recursion used", function () {
+      var heap = [5,25,13,10,14],
+          heapified = [25,14,13,10,5];
+
+      SU._heapify(heap, 0, heap.length);
+      ok(heap.equals(heapified), heap.join(',') + ' -- ' + heapified.join(','));
+    });
+
     test("heapsort", function () {
       var ary = [0,1,2,3,4,5,6],
           inOrder = ary.slice(0);
@@ -100,7 +151,7 @@
         var sorted = ary.slice(0);
 
         SU.heapsort(sorted);
-        ok(sorted.equals(inOrder), ary.join(',') + ' -- ' + inOrder.join(','));
+        ok(sorted.equals(inOrder), ary.join(',') + ' -- ' + sorted + ' -- ' + inOrder.join(','));
       }, 0);
     });
 

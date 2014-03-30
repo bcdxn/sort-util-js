@@ -167,7 +167,7 @@
    * @param {Array}    collection The collection to be sorted
    * @param {Number}   left       Start index of segment
    * @param {Number}   right      End index of segment
-   * @param {Function} [compare]  The compare function to use
+   * @param {Function} [compare]  The compare function to determine order
    */
   SU._quicksort = function(collection, left, right, compare) {
     var compare = compare || _defaultCompare,
@@ -230,8 +230,79 @@
    * @return {Array}               The sorted array
    */
   SU.heapsort = function (collection, compare) {
-    return collection;
+        var compare   = compare || _defaultCompare,
+            heapSize  = collection.length,
+            leafLevel = Math.floor(collection.length / 2),
+            tmp       = null,
+            i;
+
+        // Turn the unsorted array into a heap
+        for (i = leafLevel; i >= 0; i--) { SU._heapify(collection, i, heapSize); }
+        // Sort by swapping root with last index in heap
+        for (i = --heapSize; i > 0; i--) {
+            tmp = collection[i];
+            collection[i] = collection[0];
+            collection[0] = tmp;
+            SU._heapify(collection, 0, i);
+        }
+
+        return collection;
+    }
+
+  /**
+   * Private helper function to maintain heap order starting
+   * at the given index.
+   *
+   * @param  {Array}    collection The collection to be heapified
+   * @param  {Number}   i          The index to start the heapification
+   * @param  {Function} [compare]  The compare function to determine order
+   */
+  SU._heapify = function (collection, i, heapSize, compare) {
+    var compare  = compare || _defaultCompare,
+        iLeft    = SU._left(i),
+        iRight   = SU._right(i),
+        iLargest = i,
+        tmp      = null;
+
+    if (iLeft < heapSize && compare(collection[iLeft], collection[i]) > 0) {
+      iLargest = iLeft;
+    }
+
+    if (iRight < heapSize && compare(collection[iRight], collection[iLargest]) > 0) {
+      iLargest = iRight;
+    }
+
+    if (iLargest != i) {    // Heap order is violated, fix it!
+      tmp = collection[iLargest];
+      collection[iLargest] = collection[i];
+      collection[i] = tmp;
+      SU._heapify(collection, iLargest, heapSize, compare);
+    }
   }
+
+  /**
+   * Get the index of the parent of the given index.
+   *
+   * @param  {Number} i The index to get the parent of
+   * @return {Number}   The idnex of parent of the given index
+   */
+  SU._parent = function (i) { return Math.floor((i - 1)/ 2); }
+
+   /**
+   * Get the index of the left child of the given index.
+   *
+   * @param  {Number} i The index to get the left child of
+   * @return {Number}   The index of the left child of the given index
+   */
+  SU._left   = function (i) { return Math.floor((2 * i) + 1); }
+
+  /**
+   * Get the index of the right child of the given index.
+   *
+   * @param  {Number} i The index to get the right child of
+   * @return {Number}   The index of the right child of the given index
+   */
+  SU._right  = function (i) { return Math.floor((2 * i ) + 2); }
 
   /**
    * Private default compare function. Works only
