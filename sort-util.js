@@ -233,7 +233,7 @@
    */
   SU.heapsort = function (collection, compare) {
         var compare   = compare || _defaultCompare,
-            heapSize  = collection.length,
+            heapSize  = collection.length - 1,
             leafLevel = Math.floor(collection.length / 2),
             tmp       = null,
             i;
@@ -241,11 +241,11 @@
         // Turn the unsorted array into a heap
         for (i = leafLevel; i >= 0; i--) { SU._heapify(collection, i, heapSize); }
         // Sort by swapping root with last index in heap
-        for (i = --heapSize; i > 0; i--) {
+        for (i = heapSize; i > 0; i--) {
             tmp = collection[i];
             collection[i] = collection[0];
             collection[0] = tmp;
-            SU._heapify(collection, 0, i);
+            SU._heapify(collection, 0, i - 1);
         }
 
         return collection;
@@ -257,20 +257,22 @@
    *
    * @param  {Array}    collection The collection to be heapified
    * @param  {Number}   i          The index to start the heapification
+   * @param  {Number}   iLast      The last index considered a part of the heap
    * @param  {Function} [compare]  The compare function to determine order
+   * @return {Array}               The collection for function chaining
    */
-  SU._heapify = function (collection, i, heapSize, compare) {
+  SU._heapify = function (collection, i, iLast, compare) {
     var compare  = compare || _defaultCompare,
         iLeft    = SU._left(i),
         iRight   = SU._right(i),
         iLargest = i,
         tmp      = null;
 
-    if (iLeft < heapSize && compare(collection[iLeft], collection[i]) > 0) {
+    if (iLeft <= iLast && compare(collection[iLeft], collection[i]) > 0) {
       iLargest = iLeft;
     }
 
-    if (iRight < heapSize && compare(collection[iRight], collection[iLargest]) > 0) {
+    if (iRight <= iLast && compare(collection[iRight], collection[iLargest]) > 0) {
       iLargest = iRight;
     }
 
@@ -278,8 +280,10 @@
       tmp = collection[iLargest];
       collection[iLargest] = collection[i];
       collection[i] = tmp;
-      SU._heapify(collection, iLargest, heapSize, compare);
+      SU._heapify(collection, iLargest, iLast, compare);
     }
+
+    return collection;
   }
 
   /**
